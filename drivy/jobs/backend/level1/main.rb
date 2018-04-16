@@ -1,31 +1,29 @@
+################################
 require 'json'
-require 'date'
+require_relative 'car'
+require_relative 'rental'
+################################
+INPUT_PATH = 'data/input.json'
+OUTPUT_PATH = 'data/output.json'
+################################
 
-def rental_price(price_per_day, price_per_km, start_date_str, end_date_str, distance)
-  start_date = Date.parse(start_date_str)
-  end_date = Date.parse(end_date_str)
-  price_per_day * (end_date - start_date + 1).to_i + price_per_km * distance
-end
 
-input_path = 'data/input.json'
+data = JSON.parse(File.read(INPUT_PATH), :symbolize_names => true)
 
-cars_and_rentals = JSON.parse(File.read(input_path))
+cars_data = data[:cars]
+rentals_data = data[:rentals]
 
-cars = cars_and_rentals["cars"]
-rentals = cars_and_rentals["rentals"]
-
-rentals_prices = rentals.map do |rent|
-  car = cars.find { |c| c["id"] == rent["car_id"] }
-  prc = rental_price(car["price_per_day"], car["price_per_km"], rent["start_date"], rent["end_date"], rent["distance"])
+rentals_prices = rentals_data.map do |rent|
+  car = Car.new(cars_data.find { |c| c[:id] == rent[:car_id] })
+  rental = Rental.new({ car: car, start_date: rent[:start_date], end_date: rent[:end_date], distance: rent[:distance] })
   {
-    id: rent["id"],
-    price: prc
+    id: rent[:id],
+    price: rental.price
   }
 end
+
 output = { rentals: rentals_prices }
 
-output_path = 'data/output.json'
-
-File.open(output_path, 'wb') do |file|
+File.open(OUTPUT_PATH, 'wb') do |file|
   file.write(JSON.pretty_generate(output))
 end
