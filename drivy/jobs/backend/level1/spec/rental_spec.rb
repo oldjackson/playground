@@ -12,12 +12,10 @@ describe Rental do
       rental_params = { start_date: "2018-03-8", end_date: "2018-03-10", distance: -200 }
       expect { Rental.new(car, rental_params) }.to raise_error ArgumentError
     end
-  end
 
-  rental_params = { start_date: "2018-03-8", end_date: "2018-03-10", distance: 200 }
-  rental = Rental.new(car, rental_params)
+    rental_params = { start_date: "2018-03-8", end_date: "2018-03-10", distance: 200 }
+    rental = Rental.new(car, rental_params)
 
-  describe '#initialize' do
     it 'should store the Car in an instance variable' do
       expect(rental
         .instance_variable_get(:@car))
@@ -27,6 +25,8 @@ describe Rental do
 
 
   describe "#price" do
+    rental_params = { start_date: "2018-03-8", end_date: "2018-03-10", distance: 200 }
+    rental = Rental.new(car, rental_params)
     it "returns the correct rental price" do
 
       actual = rental.price
