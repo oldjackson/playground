@@ -1,16 +1,16 @@
 require 'date'
 
 class Rental
-  def initialize(parameters)
-    @car = parameters[:car]
-    @start_date_str = parameters[:start_date]
-    @end_date_str = parameters[:end_date]
-    @distance = parameters[:distance]
+  def initialize(car, rental_parameters)
+    @car = car
+    @start_date = Date.parse(rental_parameters[:start_date])
+    @end_date = Date.parse(rental_parameters[:end_date])
+    raise ArgumentError.new, "The end date cannot precede the start date" if @start_date > @end_date
+    @distance = rental_parameters[:distance]
+    raise ArgumentError.new, "The distance cannot be negative" if @distance < 0
   end
 
   def price
-    start_date = Date.parse(@start_date_str)
-    end_date = Date.parse(@end_date_str)
-    @car.price_per_day * (end_date - start_date + 1).to_i + @car.price_per_km * @distance
+    @car.price_per_day * (@end_date - @start_date + 1).to_i + @car.price_per_km * @distance
   end
 end
