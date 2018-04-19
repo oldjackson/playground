@@ -3,7 +3,7 @@ require 'date'
 DAYS_THRESHOLDS = [1,4,10]
 THRESH_DISCOUNTS = [10,30,50]
 COMMISSION_PC = 30
-ROAD_ASSIST_PER_KM = 100
+ROAD_ASSIST_PER_DAY = 100
 OPTIONS_DAILY_FLOWS = {
   "gps" => {daily_price: 500, beneficiary: "owner"},
   "baby_seat" => {daily_price: 200, beneficiary: "owner"},
@@ -24,7 +24,7 @@ class Rental
     days = rental_days()
     price = time_price(days) + @car.price_per_km * @distance
     commission = COMMISSION_PC * price / 100
-    assistance_fee = ROAD_ASSIST_PER_KM * days
+    assistance_fee = ROAD_ASSIST_PER_DAY * days
     extra_flows = options_flows(days)
 
     {

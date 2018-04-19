@@ -3,7 +3,7 @@ require 'date'
 DAYS_THRESHOLDS = [1, 4, 10]
 THRESH_DISCOUNTS = [10, 30, 50]
 COMMISSION_PC = 30
-ROAD_ASSIST_PER_KM = 100
+ROAD_ASSIST_PER_DAY = 100
 ################################
 
 class Rental
@@ -20,7 +20,7 @@ class Rental
     days = (@end_date - @start_date + 1).to_i
     price = time_price(days) + @car.price_per_km * @distance
     commission = COMMISSION_PC * price / 100
-    assist_fee = ROAD_ASSIST_PER_KM * days
+    assist_fee = ROAD_ASSIST_PER_DAY * days
 
     {
       price: price,
