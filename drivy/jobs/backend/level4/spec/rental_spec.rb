@@ -5,7 +5,7 @@ describe Rental do
 
   describe "#initialize" do
     it "should raise an argument error if passed inconsistent dates" do
-      rental_params = { start_date: "2018-02-8", end_date: "2018-02-", distance: 200 }
+      rental_params = { start_date: "2018-02-8", end_date: "2018-02-6", distance: 200 }
       expect { Rental.new(car, rental_params) }.to raise_error ArgumentError
     end
     it "should raise an argument error if passed a negative distance" do
@@ -24,9 +24,9 @@ describe Rental do
   end
 
   describe "#price_and_commissions" do
-    rental_params = { start_date: "2018-03-8", end_date: "2018-03-8", distance: 200 }
-    rental = Rental.new(car, rental_params)
     it "returns the correct rental price for 1 day" do
+      rental_params = { start_date: "2018-03-8", end_date: "2018-03-8", distance: 200 }
+      rental = Rental.new(car, rental_params)
 
       actual = rental.price_and_commissions[:price]
       expected = 9000
@@ -64,9 +64,9 @@ describe Rental do
       expect(actual).to eq(expected)
     end
 
+    rental_params = { start_date: "2018-03-8", end_date: "2018-03-27", distance: 200 }
+    rental = Rental.new(car, rental_params)
     it "returns the correct total commission" do
-      rental_params = { start_date: "2018-03-8", end_date: "2018-03-27", distance: 200 }
-      rental = Rental.new(car, rental_params)
 
       actual = rental.price_and_commissions[:commission].values.reduce(:+)
       expected = 16980
@@ -75,8 +75,6 @@ describe Rental do
     end
 
     it "returns the correct insurance fee" do
-      rental_params = { start_date: "2018-03-8", end_date: "2018-03-27", distance: 200 }
-      rental = Rental.new(car, rental_params)
 
       actual = rental.price_and_commissions[:commission][:insurance_fee]
       expected = 8490
@@ -85,8 +83,6 @@ describe Rental do
     end
 
     it "returns the correct assistance fee" do
-      rental_params = { start_date: "2018-03-8", end_date: "2018-03-27", distance: 200 }
-      rental = Rental.new(car, rental_params)
 
       actual = rental.price_and_commissions[:commission][:assistance_fee]
       expected = 2000
@@ -95,8 +91,6 @@ describe Rental do
     end
 
     it "returns the correct drivy fee" do
-      rental_params = { start_date: "2018-03-8", end_date: "2018-03-27", distance: 200 }
-      rental = Rental.new(car, rental_params)
 
       actual = rental.price_and_commissions[:commission][:drivy_fee]
       expected = 6490
