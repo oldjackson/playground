@@ -7,7 +7,7 @@ OUTPUT_PATH = 'data/output.json'
 
 
 def read_json
-  JSON.parse(File.read(INPUT_PATH), :symbolize_names => true)
+  JSON.parse(File.read(INPUT_PATH), symbolize_names: true)
 end
 
 def write_json(output)
@@ -26,7 +26,7 @@ def build_actions(amounts)
     {
       who: "owner",
       type: "credit",
-      amount: amounts[:price]-amounts[:commission].values.reduce(:+)
+      amount: amounts[:price] - amounts[:commission].values.reduce(:+)
     },
     {
       who: "insurance",
