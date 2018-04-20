@@ -7,7 +7,7 @@ OUTPUT_PATH = 'data/output.json'
 
 
 def read_json
-  JSON.parse(File.read(INPUT_PATH), :symbolize_names => true)
+  JSON.parse(File.read(INPUT_PATH), symbolize_names: true)
 end
 
 def write_json(output)
