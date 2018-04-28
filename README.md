@@ -1,0 +1,1 @@
+# Various Ruby / RoR exercises
